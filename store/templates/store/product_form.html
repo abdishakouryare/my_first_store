@@ -1,0 +1,74 @@
+{% extends 'store/base.html' %}
+{% block content %}
+
+<div class="form-wrapper">
+    <div class="form-card">
+
+        <!-- TOP BAR -->
+        <div class="form-top">
+            <a href="{% url 'product_list' %}" class="btn-back-top">
+                ⬅ Back
+            </a>
+        </div>
+
+        <!-- DYNAMIC TITLE -->
+        <h2 class="form-title">
+            {% if product %}
+                ✏ Update Product
+            {% else %}
+                ➕ Create Product
+            {% endif %}
+        </h2>
+
+        <p class="form-subtitle">
+            {% if product %}
+                Modify the product details below
+            {% else %}
+                Add a new product to your store
+            {% endif %}
+        </p>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label>Product Name</label>
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="e.g. Wireless Headphones"
+                    value="{{ product.name|default:'' }}"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Price</label>
+                <input
+                    type="number"
+                    step="0.01"
+                    name="price"
+                    placeholder="e.g. 99.99"
+                    value="{{ product.price|default:'' }}"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Product Image</label>
+                <input type="file" name="image">
+            </div>
+
+            <button type="submit" class="btn-submit">
+                {% if product %}
+                    💾 Update Product
+                {% else %}
+                    💾 Save Product
+                {% endif %}
+            </button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

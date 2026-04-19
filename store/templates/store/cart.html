@@ -1,0 +1,43 @@
+{% extends 'store/base.html' %}
+{% block content %}
+
+<div class="cart-wrapper">
+
+    <h2 class="cart-title">🛒 Your Shopping Cart</h2>
+
+    <div class="cart-grid">
+        {% for item in items %}
+        <div class="cart-item">
+            <div class="cart-left">
+                <div class="product-img">
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                </div>
+                <div class="product-info">
+                    <h4>{{ item.product.name }}</h4>
+                    <p>Quantity: {{ item.qty }}</p>
+                </div>
+            </div>
+
+            <div class="cart-right">
+                <span class="price">${{ item.subtotal }}</span>
+               <div class="qty-control">
+        <a href="{% url 'remove_from_cart' item.product.id %}" class="qty-btn">−</a>
+            <span>{{ item.qty }}</span>
+            <a href="{% url 'add_to_cart' item.product.id %}" class="qty-btn">+</a>
+        </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="cart-summary">
+        <div class="summary-box">
+            <span>Total:</span>
+            <strong>${{ total }}</strong>
+        </div>
+        <a href="#" class="checkout-btn">Proceed to Checkout</a>
+    </div>
+
+</div>
+
+{% endblock %}
